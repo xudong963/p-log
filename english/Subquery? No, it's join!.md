@@ -18,13 +18,13 @@ With these two non-standard joins, we can ensure that all subqueries have been t
 Handling non-correlated subqueries is relatively simple and only requires simple transformations. Let's look at how to expand non-correlated subqueries through a few simple examples:
 
 1. scalar subquery: `select number, (select number from numbers(10) as t2 where number > 3 limit 1) from numbers(10) as t1`， single join is enough.
-   <img src="../images/uncorrelated_scalar_subquery.jpg" width="400" height="300" alt="uncorrelated scalar subquery" />
+   <img src="../images/uncorrelated_scalar_subquery.jpg" width="400" height="500" alt="uncorrelated scalar subquery" />
 
 2. exists subquery: `select number, exists(select * from numbers(10) as t2 where number > 3) from numbers(10) as t1;` Adding `LIMIT 1`, `COUNT(*)`, and `Filter(COUNT(*) = 1)` operators to subqueries. The LIMIT 1 operator can make the query more efficient because it only needs to determine whether a result exists or not.
-  <img src="../images/uncorrelated_exists_subquery.jpg" width="400" height="300" alt="uncorrelated exists subquery" />
+  <img src="../images/uncorrelated_exists_subquery.jpg" width="400" height="500" alt="uncorrelated exists subquery" />
 
 3. any subquery: `select number from numbers(10) as t1 where number > any(select number from numbers(20) as t2) or number > 1;`, In this SQL query, because it contains a **disjunction predicate**, we cannot use a semi join to transform the subquery. Instead, the mark column of the mark join will replace the subquery, so filter will be `marker or number > 1`.
-   <img src="../images/uncorrelated_any_subquery.jpg" width="400" height="300" alt="uncorrelated any subquery" />
+   <img src="../images/uncorrelated_any_subquery.jpg" width="400" height="500" alt="uncorrelated any subquery" />
 
 ### Correlated subquery
 
