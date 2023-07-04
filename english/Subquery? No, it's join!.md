@@ -73,3 +73,8 @@ With this, the core idea of subquery processing has been introduced. There are m
 4. ...
 
 Throughout this article, all subqueries are ultimately transformed into joins, so the performance of joins largely determines the performance of subqueries. In the next blog post, we will discuss the iterative process of developing Databend's join from scratch.
+
+
+Reference:
+1. The complete story of join
+2. Unnesting arbitrary queries
